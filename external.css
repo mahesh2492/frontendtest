@@ -1,0 +1,12 @@
+#mycarousel {
+   background-color: #FFFFFF !important;;
+.carousel-inner > .item > img,
+.carousel-inner > .item > a > img {
+    width: 70%;
+    /*height: 150px !important;*/
+    margin:auto;
+    }
+  }
+body {
+    background-color: #d3d3d3;
+  }

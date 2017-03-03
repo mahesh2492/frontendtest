@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" media="screen" title="no title">
+  </head>
+  <script  src="https://code.jquery.com/jquery-3.1.1.min.js"  crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <body style="background-color:Grey">
+    <div class="container" id="container">
+
+      <div class="row" height="200px">
+        <div class="col-md-3" >
+      <form class="form" id="formToSerialize">
+
+      <label for="username">Username </label>
+      <input id="username" name="username" type="text"  placeholder="Enter Username">
+
+
+      </form>
+    </div>
+      <div class="col-md-9">
+        <button id="get-data">Get User</button>
+      </div>
+    </div>
+
+
+      <div class="row">
+        <div class="col-md-12">
+        <img id="user-image" src="" />
+        <p id="user-name"></p>
+        <p id="user-company"></p>
+        <p id="user-email"></p>
+        <p id="user-location"></p>
+        <p id="user-created"></p>
+        <p id="user-url"></p>
+      </div>
+      </div>
+    </div>
+    <script>
+      $(document).ajaxStart(function(){
+        $("#user-image").attr("src","progress.gif");
+      }).ajaxStop(function(){
+        console.log("Ajax Stopped.")
+      }).ajaxSuccess(function(){
+        console.log("Ajax Success")
+      }).ajaxComplete(function(){
+        console.log("Ajax Completed")
+      })
+
+      $("#get-data").on("click",function(){
+
+        var username = $("#username").val();
+        console.log(username);
+        $.ajax({
+          url:"https://public-api.wordpress.com/rest/v1/sites/dotnetask.wordpress.com",
+          success: function(data){
+            console.log(data)
+            $("#user-image").attr("src",data.avatar_url);
+            if(data.name!= null)
+            $("#user-name").text("User Name is :"+data.name);
+            else {
+              $("#user-name").text("Name is not set by user");
+            }
+
+            if(data.ID!= null)
+            $("#user-company").text(" ID is :"+data.ID);
+
+
+
+          },
+          error: function(){
+            $("#user-image").attr("src","no-user.png");
+            $("#user-name").text("User not found");
+          }
+        })
+      })
+    </script>
+  </body>
+</html>
